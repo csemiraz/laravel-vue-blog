@@ -9,6 +9,9 @@
             <li><router-link :to="{name:'blog'}" @click="hideOverLay">Blog</router-link></li>
             <li><router-link :to="{name: 'about'}" @click="hideOverLay">About</router-link></li>
             <li><router-link :to="{name: 'contact'}" @click="hideOverLay">Contact</router-link></li>
+            <li><router-link :to="{name: 'login'}" @click="hideOverLay">Login</router-link></li>
+            <li><router-link :to="{name: 'register'}" @click="hideOverLay">Register</router-link></li>
+            <li><router-link :to="{name: 'dashboard'}" @click="hideOverLay">Dashboard</router-link></li>
           </ul>
         </div>
 
