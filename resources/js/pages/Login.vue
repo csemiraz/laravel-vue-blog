@@ -1,20 +1,43 @@
 <template>
   <div id="backend-view">
-    <form>
+    <form @submit.prevent="submitForm">
       <h3>Login Here</h3>
       <label for="email">Email</label>
-      <input type="text" id="email" />
-      <span class="error"></span>
+      <input type="text" id="email" v-model="fields.email"/>
+      <span class="error" v-if="errors.email">{{ errors.email[0] }}</span>
 
       <label for="password">Password</label>
-      <input type="password" id="password" />
-      <span class="error"></span>
+      <input type="password" id="password" v-model="fields.password"/>
+      <span class="error" v-if="errors.password">{{ errors.password }}</span>
 
       <button type="submit">Log In</button>
       <span>Don't have an account? <router-link :to="{name: 'register'}">Sign up</router-link></span>
     </form>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      fields: {},
+      errors: {}
+    }
+  },
+  methods: {
+    submitForm() {
+      axios.post('/api/login', this.fields)
+        .then((response)=> {
+          this.$router.push({name: 'dashboard'});
+        })
+        .catch((error) => {
+          //console.log(error);
+          this.errors = error.response.data.errors;
+        })
+    }
+  }
+}
+</script>
 
 
 <style scoped>

@@ -1,23 +1,24 @@
 <template>
   <div id="backend-view">
-    <form>
+    <form @submit.prevent="submitForm">
       <h3>Sign Up Here</h3>
       <label for="name">Name</label>
-      <input type="text" id="name" />
-      <span class="error"></span>
+      <input type="text" id="name" v-model="fields.name"/>
+      <span class="error" v-if="errors.name">{{ errors.name[0] }}</span>
 
       <label for="email">Email</label>
-      <input type="text" id="email" />
-      <span class="error"></span>
+      <input type="text" id="email" v-model="fields.email"/>
+      <span class="error" v-if="errors.email">{{ errors.email[0] }}</span>
 
       <label for="password">Password</label>
-      <input type="password" id="password" />
-      <span class="error"></span>
+      <input type="password" id="password" v-model="fields.password"/>
+      <span class="error" v-if="errors.password">{{ errors.password[0] }}</span>
 
       <label for="password_confirmation">Confirm password</label>
       <input
         type="password"
         id="password_confirmation"
+        v-model="fields.password_confirmation"
       />
 
       <button type="submit">Sign Up</button>
@@ -25,6 +26,29 @@
     </form>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      fields: {},
+      errors: {}
+    }
+  },
+  methods: {
+    submitForm() {
+      axios.post('/api/register', this.fields)
+          .then(()=> {
+            this.$router.push({name: 'dashboard'})
+          })
+          .catch((error)=> {
+            this.errors = error.response.data.errors;
+            //console.log(error);
+          })
+    }
+  }
+}
+</script>
 
 
 <style scoped>
