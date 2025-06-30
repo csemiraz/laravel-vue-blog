@@ -97,3 +97,9 @@
         </div>
       </section>
 </template>
+
+<script>
+export default {
+  emits: ['updateSidebar'],
+}
+</script>

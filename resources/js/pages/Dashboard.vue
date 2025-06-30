@@ -39,7 +39,11 @@ export default {
     logout() {
       axios
       .post("/api/logout")
-      .then((response) => (this.$router.push({name:'home'})))
+      .then((response) => {
+          this.$router.push({ name: "home" });
+          localStorage.removeItem("authenticated");
+          this.$emit("updateSidebar");
+        })
       .catch((error) => {
         console.log(error);
       })
@@ -50,7 +54,11 @@ export default {
       .get("/api/user")
       .then((response) => (this.name = response.data.name))
       .catch((error) => {
-        console.log(error);
+        if(error.response.status === 401) {
+          this.$emit("updateSidebar");
+          localStorage.removeItem("authenticated");
+          this.$router.push({name: 'login'});
+        }
       })
   }
 }

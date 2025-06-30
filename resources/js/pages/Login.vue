@@ -29,6 +29,8 @@ export default {
       axios.post('/api/login', this.fields)
         .then((response)=> {
           this.$router.push({name: 'dashboard'});
+          localStorage.setItem("authenticated", "true");
+          this.$emit("updateSidebar");
         })
         .catch((error) => {
           //console.log(error);
