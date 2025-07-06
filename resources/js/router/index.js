@@ -6,7 +6,10 @@ import Blog from '../pages/Blog.vue';
 import SingleBlog from '../pages/SingleBlog.vue';
 import Login from '../pages/Login.vue';
 import Register from '../pages/Register.vue';
-import Dashboard from '../pages/Dashboard.vue';
+import Dashboard from '../pages/Dashboard.vue'; 
+import CreateCategory from '../pages/category/CreateCategory.vue';
+import AllCategory from '../pages/category/AllCategory.vue';
+import EditCategory from '../pages/category/EditCategory.vue';
 
 const routes = [
   {path: '/', name: 'home', component: Home},
@@ -36,6 +39,27 @@ const routes = [
     component: Dashboard,
     meta: { requiresAuth: true }
   },
+  {
+    path: '/categories/create',
+    name: 'CreateCategory',
+    component: CreateCategory,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/categories/view',
+    name: 'ViewCategory',
+    component: AllCategory,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/categories/edit/:id', 
+    name: 'EditCategory',
+    component: EditCategory,
+    meta: { requiresAuth: true },
+    props: true
+  },
+
+
 ];
 
 const router = createRouter({

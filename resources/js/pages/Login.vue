@@ -28,8 +28,8 @@ export default {
     submitForm() {
       axios.post('/api/login', this.fields)
         .then((response)=> {
-          this.$router.push({name: 'dashboard'});
           localStorage.setItem("authenticated", "true");
+          this.$router.push({name: 'dashboard'});
           this.$emit("updateSidebar");
         })
         .catch((error) => {

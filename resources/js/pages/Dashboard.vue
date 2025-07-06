@@ -14,14 +14,10 @@
           >
         </li>
         <li>
-          <a 
-            >Create Categories</a
-          >
+          <router-link :to="{name: 'CreateCategory'}">Create Categories</router-link>
         </li>
         <li>
-          <a
-            >Categories List</a
-          >
+          <router-link :to="{name: 'ViewCategory'}">Categories List</router-link>
         </li>
       </ul>
     </div>
@@ -55,10 +51,11 @@ export default {
       .then((response) => (this.name = response.data.name))
       .catch((error) => {
         if(error.response.status === 401) {
-          this.$emit("updateSidebar");
           localStorage.removeItem("authenticated");
           this.$router.push({name: 'login'});
+          this.$emit("updateSidebar");
         }
+       //console.log(error);
       })
   }
 }

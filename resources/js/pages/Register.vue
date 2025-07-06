@@ -39,7 +39,12 @@ export default {
     submitForm() {
       axios.post('/api/register', this.fields)
           .then(()=> {
-            this.$router.push({name: 'dashboard'})
+            //this.$router.push({name: 'dashboard'});
+            //this.$router.push({name: 'login'});
+            localStorage.setItem('authenticated', 'true');
+            this.$router.push({name: 'dashboard'});
+            this.$emit('updateSidebar');
+
           })
           .catch((error)=> {
             this.errors = error.response.data.errors;

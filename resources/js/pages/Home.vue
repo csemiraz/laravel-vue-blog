@@ -61,6 +61,6 @@
 
 <script>
 export default {
-  emits: ['updateSidebar'],
+  emits: ['updateSidebar']
 }
 </script>
