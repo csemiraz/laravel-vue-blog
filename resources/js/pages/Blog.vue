@@ -1,4 +1,5 @@
 <template>
+  <div>
   <h2 class="header-title">All Blog Posts</h2>
       <div class="searchbar">
         <form action="">
@@ -96,10 +97,9 @@
           <a href="">&raquo;</a>
         </div>
       </section>
+    </div>
 </template>
 
 <script>
-export default {
-  emits: ['updateSidebar']
-}
+
 </script>

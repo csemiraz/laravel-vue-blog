@@ -43,6 +43,7 @@
         @update-sidebar="updateSidebar" 
         @show-edit-success="showEditSuccess" 
         :editSuccess="editSuccess"
+        :key="$route.path"
         ></router-view>
       </main>
 

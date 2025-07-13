@@ -1,5 +1,6 @@
 <template>
-   <header class="header">
+   <div>
+    <header class="header">
         <div class="header-text">
           <h1>Alphayo Blog</h1>
           <h4>Home of verified news...</h4>
@@ -57,10 +58,9 @@
             </h4>
           </div>
         </section>
+   </div>
 </template>
 
 <script>
-export default {
-  emits: ['updateSidebar']
-}
+
 </script>
