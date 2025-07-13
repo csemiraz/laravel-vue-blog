@@ -10,6 +10,9 @@ import Dashboard from '../pages/Dashboard.vue';
 import CreateCategory from '../pages/category/CreateCategory.vue';
 import AllCategory from '../pages/category/AllCategory.vue';
 import EditCategory from '../pages/category/EditCategory.vue';
+import CreatePost from '../pages/post/CreatePost.vue';
+import AllPost from '../pages/post/AllPost.vue';
+import EditPost from '../pages/post/EditPost.vue';
 
 const routes = [
   {path: '/', name: 'home', component: Home},
@@ -55,6 +58,25 @@ const routes = [
     path: '/categories/edit/:id', 
     name: 'EditCategory',
     component: EditCategory,
+    meta: { requiresAuth: true },
+    props: true
+  },
+   {
+    path: '/posts/create',
+    name: 'CreatePost',
+    component: CreatePost,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/posts/view',
+    name: 'AllPost',
+    component: AllPost,
+    meta: { requiresAuth: true }
+  },
+   {
+    path: '/posts/edit/:id',
+    name: 'EditPost',
+    component: EditPost,
     meta: { requiresAuth: true },
     props: true
   },

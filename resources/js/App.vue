@@ -39,7 +39,11 @@
       </div>
       <!-- main -->
       <main class="container">
-        <router-view @update-sidebar="updateSidebar"></router-view>
+        <router-view 
+        @update-sidebar="updateSidebar" 
+        @show-edit-success="showEditSuccess" 
+        :editSuccess="editSuccess"
+        ></router-view>
       </main>
 
       <!-- Main footer -->
@@ -54,6 +58,7 @@ export default{
     return {
       overLayVisibility: false,
       loggedIn: false,
+      editSuccess: false,
     }
   },
 
@@ -69,6 +74,12 @@ export default{
     },
     updateSidebar() {
       this.loggedIn = !this.loggedIn;
+    },
+    showEditSuccess() {
+      this.editSuccess = true;
+      setInterval(() => {
+        this.editSuccess = false;
+      }, 5000)
     }
   },
   mounted() {
