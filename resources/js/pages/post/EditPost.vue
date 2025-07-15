@@ -111,7 +111,7 @@ export default {
           this.url = response.data.data.photo
         })
         .catch((error) => {
-          console.log(response);
+          console.log(error.response.data.message);
         })
   }
 

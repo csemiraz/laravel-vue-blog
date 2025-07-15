@@ -61,13 +61,23 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $post = Post::find($id);
+        $post = Post::where('id', $id)->where('user_id', Auth::id())->first();
+        //$post = Post::find($id);
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Single Post info retrived successfully',
-            'data' => $post,
-        ], 200);
+        if($post) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Single Post info retrived successfully',
+                'data' => $post,
+            ], 200);
+        }
+        else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Data Not Found!',
+            ], 404);
+        }
+        
     }
 
     public function update(Request $request,  $id) 

@@ -3,7 +3,7 @@
   <h2 class="header-title">All Blog Posts</h2>
       <div class="searchbar">
         <form action="">
-          <input type="text" placeholder="Search..." name="search" />
+          <input type="text" placeholder="Search..." name="search" v-model="search" />
 
           <button type="submit">
             <i class="fa fa-search"></i>
@@ -13,81 +13,25 @@
       </div>
       <div class="categories">
         <ul>
-          <li><a href="">Health</a></li>
-          <li><a href="">Entertainment</a></li>
-          <li><a href="">Sports</a></li>
-          <li><a href="">Nature</a></li>
+          <li v-for="category in categories" :key="category.id"><a href="#" @click="fetchPostByCategory(category.id)">{{ category.category_name }}</a></li>
         </ul>
       </div>
       <section class="cards-blog latest-blog">
-        <div class="card-blog-content">
-          <img src="images/pic1.jpg" alt="" />
+        <div v-for="post in posts" :key="post.id" class="card-blog-content">
+          <img :src="post.photo" style="height: 350px; width: 100%;" alt="" />
           <p>
-            2 hours ago
-            <span>Written By Alphayo Wakarindi</span>
+            {{ post.created_at }}
+            <span>Written By {{ post.user }}</span>
           </p>
           <h4>
-            <a href="single-blog.html">Benefits of getting covid 19 vaccination</a>
+            <router-link :to="{name: 'singleBlog', params: { slug: post.slug }}">{{ post.title }}</router-link>
           </h4>
         </div>
-
-        <div class="card-blog-content">
-          <img src="images/pic2.jpg" alt="" />
-          <p>
-            23 hours ago
-            <span>Written By Alphayo Wakarindi</span>
-          </p>
-          <h4 style="font-weight: bolder">
-            <a href="single-blog.html">Top 10 Music Stories Never Told</a>
-          </h4>
-        </div>
-
-        <div class="card-blog-content">
-          <img src="images/pic3.jpg" alt="" />
-          <p>
-            2 days ago
-            <span>Written By Alphayo Wakarindi</span>
-          </p>
-          <h4 style="font-weight: bolder">
-            <a href="single-blog.html">WRC Safari Rally Back To Kenya After 19 Years</a>
-          </h4>
-        </div>
-
-        <div class="card-blog-content">
-          <img src="images/pic4.jpg" alt="" />
-          <p>
-            3 days ago
-            <span>Written By Alphayo Wakarindi</span>
-          </p>
-          <h4 style="font-weight: bolder">
-            <a href="single-blog.html">Premier League 2021/2022 Fixtures</a>
-          </h4>
-        </div>
-
-        <div class="card-blog-content">
-          <img src="images/pic5.jpg" alt="" />
-          <p>
-            2 weeks ago
-            <span>Written By Alphayo Wakarindi</span>
-          </p>
-          <h4 style="font-weight: bolder">
-            <a href="single-blog.html">12 Health Benefits Of Pomegranate Fruit</a>
-          </h4>
-        </div>
-
-        <div class="card-blog-content">
-          <img src="images/pic6.jpg" alt="" />
-          <p>
-            1 month ago
-            <span>Written By Alphayo Wakarindi</span>
-          </p>
-          <h4 style="font-weight: bolder">
-            <a href="single-blog.html">Nairobi, The Only City In The World With A National Park</a>
-          </h4>
-        </div>
-
+        
+        <h3 v-if="!posts.length">No Post Found!</h3>
+        <br>
         <!-- pagination -->
-        <div class="pagination" id="pagination">
+        <!-- <div class="pagination" id="pagination">
           <a href="">&laquo;</a>
           <a class="active" href="">1</a>
           <a href="">2</a>
@@ -95,11 +39,110 @@
           <a href="">4</a>
           <a href="">5</a>
           <a href="">&raquo;</a>
+        </div> -->
+
+        <div v-if="!posts.length" class="pagination" id="pagination">
+          <a href="#" 
+            v-for="(link,index) in links" 
+            :key="index" 
+            v-html="link.label"
+            :class="{ active: link.active, disabled: !link.url }"
+            @click="changePage(link)"
+          ></a>
         </div>
       </section>
     </div>
 </template>
 
 <script>
+export default {
+  data() {
+    return {
+      posts: [],
+      categories: [],
+      search: "",
+      links: []
+    }
+  },
+  methods: {
+    fetchBlogPost() {
+      axios.get('/api/posts/blog-post')
+        .then((response) => {
+          this.posts = response.data.data;
+          this.links = response.data.meta.links;
+          //console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    },
+    fetchCategories() {
+      axios.get('/api/categories/all/')
+        .then((response) => {
+          this.categories = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    },
+    fetchPostByCategory(category)
+    {
+      axios.get('/api/posts-by-category/' + category)
+        .then((response) => {
+          this.posts = response.data.data;
+          //this.links = response.data.meta.links;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    },
+    changePage(link)
+    {
+      if (!link.url || link.active) {
+        retun;
+      }
+      axios.get(link.url) 
+        .then((response) => {
+          this.posts = response.data.data;
+          this.links = response.data.meta.links;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+  },
+  mounted() {
+    this.fetchBlogPost();
+    this.fetchCategories();
+  },
+  watch: {
+    search() {
+      axios.get("/api/search", {
+        params: { search: this.search }
+      })
+        .then((response) => {
+          this.posts = response.data.data;
+           //this.links = response.data.meta.links;
+          //console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+  }
+}
 
 </script>
+
+<style scoped>
+h3 {
+  font-size: 30px;
+  text-align: center;
+  margin: 50px 0;
+  color: red;
+}
+
+.disabled {
+  pointer-events: none;
+}
+</style>

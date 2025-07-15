@@ -21,8 +21,9 @@ const routes = [
   {path: '/contact', name: 'contact', component: Contact},
   {
     path: '/blog/:slug',
-    name: 'singleblog',
-    component: SingleBlog
+    name: 'singleBlog',
+    component: SingleBlog,
+    props: true
   },
   {
     path: '/login',

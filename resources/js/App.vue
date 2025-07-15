@@ -5,7 +5,7 @@
       <!-- sidebar -->
        <div class="sidebar" :class="{overLay: overLayVisibility}">
         <span class="closeButton" @click="hideOverLay">&times;</span>
-        <p class="brand-title"><a href="">Alphayo Blog</a></p>
+        <p class="brand-title"><a href="">Trust Tech Blog</a></p>
 
         <div class="side-links">
           <ul>
